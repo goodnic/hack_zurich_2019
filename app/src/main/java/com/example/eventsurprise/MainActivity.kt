@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     Log.d("MAP", "runOnUiThread - yeah!")
                 }
+
+                val authToken = getAuthToken()
+                Log.d("MAP", "authToken: " + authToken)
+                val locations = getLocationData(authToken)
+                Log.d("MAP", "locations : " + locations)
             }
         }
     }

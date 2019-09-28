@@ -43,7 +43,7 @@ data class ResultList(
     }
 }
 
-suspend fun getTimeMap(coordinates: LatLng) : ResultList { //: ResultList
+suspend fun getTimeMap(coordinates: LatLng) : ResultList {
     val (_, _, result) = Fuel.post("https://api.traveltimeapp.com/v4/time-map")
         .header(Headers.CONTENT_TYPE, "application/json")
         .header("X-Application-Id", X_APPLICATION_ID)
