@@ -59,7 +59,7 @@
                 app:srcCompat="@drawable/hiking" />
 
             <Button
-                android:id="@+id/btnOtherPeople2"
+                android:id="@+id/btnActivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
@@ -82,7 +82,7 @@
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/btnOtherPeople3"
+                android:id="@+id/btnPeopleCount"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
@@ -149,7 +149,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/btnOtherActivity2"
+                android:id="@+id/btnResurprise"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -192,7 +192,7 @@
                 android:background="#640B0B"
                 android:padding="10dp"
                 android:stateListAnimator="@null"
-                android:text="Buy for 4 CHF"
+                android:text="Buy for 40 CHF"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
