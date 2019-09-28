@@ -1,7 +1,11 @@
 package com.example.eventsurprise
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.transition.Slide
 import android.view.Gravity
@@ -26,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        checkIfGpsEnabled()
         fusedLocationClient.lastLocation
             .addOnSuccessListener {
                 lastLocation = it
@@ -45,5 +50,19 @@ class MainActivity : AppCompatActivity() {
         slide.duration = 400
         slide.interpolator = DecelerateInterpolator()
         window.exitTransition = slide
+    }
+
+    private fun checkIfGpsEnabled() {
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessage()
+        }
+    }
+
+    private fun buildAlertMessage() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .show()
     }
 }
