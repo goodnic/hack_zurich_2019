@@ -15,6 +15,7 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="108dp"
         android:backgroundTint="@color/colorAccent"
+        android:onClick="changeToIntermediate"
         android:text="Go"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrimary"
