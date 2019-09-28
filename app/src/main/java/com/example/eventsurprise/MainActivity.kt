@@ -3,15 +3,30 @@ package com.example.eventsurprise
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        getTimeMap(LatLng(1.0, 1.0))
+
+        // fetch data from service in the background
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                var resultList = getTimeMap(LatLng(1.0, 1.0))
+                resultList.results.forEach { Log.d("MAP", "ONE OF THE RESULTS: " + it.search_id) }
+                // update UI here
+                runOnUiThread {
+                    Log.d("MAP", "runOnUiThread - yeah!")
+                }
+            }
+        }
     }
 
     fun changeToMap(view: View) {
