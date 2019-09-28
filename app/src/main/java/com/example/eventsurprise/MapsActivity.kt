@@ -23,8 +23,12 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.IOException
 
+
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
-    GoogleMap.OnMarkerClickListener {
+    GoogleMap.OnMarkerClickListener  {
+
+    private var LOGTAG: String = "Map"
 
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,8 +41,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
         private const val REQUEST_CHECK_SETTINGS = 2
-        private const val PLACE_PICKER_REQUEST = 3
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +65,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
         createLocationRequest()
-
-//        val fab = findViewById<FloatingActionButton>(R.id.fab)
-//        fab.setOnClickListener {
-//            loadPlacePicker()
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -75,15 +75,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 startLocationUpdates()
             }
         }
-//        if (requestCode == PLACE_PICKER_REQUEST) {
-//            if (resultCode == RESULT_OK) {
-//                val place = PlacePicker.getPlace(this, data)
-//                var addressText = place.name.toString()
-//                addressText += "\n" + place.address.toString()
-//
-//                placeMarkerOnMap(place.latLng)
-//            }
-//        }
     }
 
     override fun onPause() {
@@ -115,15 +106,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
         setUpMap()
     }
-
-//    override fun onMapReady(googleMap: GoogleMap) {
-//        mMap = googleMap
-//
-//        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-//    }
 
     override fun onMarkerClick(p0: Marker?) = false
 
@@ -193,6 +175,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null /* Looper */)
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        // request permission result here
+        val index = permissions.indexOfFirst { it == android.Manifest.permission.ACCESS_FINE_LOCATION } // -1 if not found
+        if (index >= 0) {
+            val grantedPermission = permissions[index]
+            val grantedResult = grantResults[index]
+            if(grantedResult == PackageManager.PERMISSION_GRANTED) {
+                // permission has been granted
+                Log.d(LOGTAG, "grantedPermission: $grantedPermission ; grantedResult: $grantedResult")
+                setUpMap()
+            }else
+                Log.d(LOGTAG, "Not granted permission: $grantedPermission ; grantedResult: $grantedResult")
+        }
+    }
+
     private fun createLocationRequest() {
         locationRequest = LocationRequest()
         locationRequest.interval = 10000
@@ -217,8 +214,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                     // and check the result in onActivityResult().
                     e.startResolutionForResult(this@MapsActivity,
                         REQUEST_CHECK_SETTINGS)
+
                 } catch (sendEx: IntentSender.SendIntentException) {
                     // Ignore the error.
+
                 }
             }
         }
