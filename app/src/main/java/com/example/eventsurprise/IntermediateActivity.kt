@@ -10,9 +10,15 @@ import kotlinx.coroutines.*
 
 class IntermediateActivity : AppCompatActivity() {
 
+    private var lastLocation: LatLng? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intermediate)
+        lastLocation = LatLng(
+            intent.getDoubleExtra("lat", 47.376888),
+            intent.getDoubleExtra("lng", 8.541694)
+        )
     }
 
     override fun onResume() {
@@ -31,16 +37,16 @@ class IntermediateActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPOIsAsync(): Deferred<Array<PointOfInterest>> {
+    private fun getPOIsAsync(): Deferred<ArrayList<PointOfInterest>> {
         return GlobalScope.async {
             val poiList = ArrayList<PointOfInterest>()
-            var resultList = getTimeMap(LatLng(47.376888, 8.541694))
+            var resultList = getTimeMap(lastLocation!!)
             resultList.results.forEach {
                 it.shapes.forEach{
                     poiList.addAll(getPOIs(it.shell))
                 }
             }
-            poiList.toArray() as Array<PointOfInterest>
+            poiList
         }
     }
 
