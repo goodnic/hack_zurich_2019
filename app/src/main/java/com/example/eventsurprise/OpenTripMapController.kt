@@ -1,8 +1,27 @@
 package com.example.eventsurprise
 
+import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.fuel.httpGet
-import io.data2viz.geojson.FeatureCollection
-import io.data2viz.geojson.toGeoJsonObject
+import com.google.gson.Gson
+
+data class PointOfInterest(
+    val xid: String,
+    val rate: Number,
+    val name: String,
+    val osm: String,
+    val kinds: String,
+    val wikidata: String,
+    val point: LatLon
+) {
+    class Deserializer : ResponseDeserializable<Array<PointOfInterest>> {
+        override fun deserialize(content: String) = Gson().fromJson(content, Array<PointOfInterest>::class.java)
+    }
+}
+
+data class LatLon(
+    val lon: Double,
+    val lat: Double
+)
 
 private data class BoundingBox(
     val minLng: Double,
@@ -20,7 +39,7 @@ private fun extractFromCoordinateList(coordinateList: List<Coordinate>): Boundin
     )
 }
 
-fun getPOIs(borderCoordinates: List<Coordinate>): FeatureCollection {
+fun getPOIs(borderCoordinates: List<Coordinate>): Array<PointOfInterest> {
     val boundingBox = extractFromCoordinateList(borderCoordinates)
     val (_, _, result) = "https://api.opentripmap.com/0.1/en/places/bbox".httpGet(
         listOf(
@@ -29,8 +48,9 @@ fun getPOIs(borderCoordinates: List<Coordinate>): FeatureCollection {
             "lon_max" to boundingBox.maxLng.toString(),
             "lat_min" to boundingBox.minLat.toString(),
             "lat_max" to boundingBox.maxLat.toString(),
-            "apikey" to ""
+            "apikey" to "",
+            "format" to "json"
         )
-    ).response()
-    return result.toString().toGeoJsonObject() as FeatureCollection
+    ).responseObject(PointOfInterest.Deserializer())
+    return result.get()
 }

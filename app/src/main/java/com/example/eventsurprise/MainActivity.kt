@@ -20,7 +20,13 @@ class MainActivity : AppCompatActivity() {
         runBlocking {
             withContext(Dispatchers.IO) {
                 var resultList = getTimeMap(LatLng(1.0, 1.0))
-                resultList.results.forEach { Log.d("MAP", "ONE OF THE RESULTS: " + it.search_id) }
+                resultList.results.forEach {
+                    Log.d("MAP", "ONE OF THE RESULTS: " + it.search_id)
+                    it.shapes.forEach{
+                        val pois = getPOIs(it.shell)
+                        Log.d("POI", pois.toString())
+                    }
+                }
                 // update UI here
                 runOnUiThread {
                     Log.d("MAP", "runOnUiThread - yeah!")
