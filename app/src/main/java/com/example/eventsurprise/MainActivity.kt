@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         setAnimation()
         setContentView(R.layout.activity_main)
 
-
     }
 
     fun changeToIntermediate(view: View) {

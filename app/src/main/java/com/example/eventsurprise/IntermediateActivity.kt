@@ -6,36 +6,41 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class IntermediateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intermediate)
+    }
+
+    override fun onResume() {
+        super.onResume()
         // fetch data from service in the background
         runBlocking {
-            withContext(Dispatchers.IO) {
-                var resultList = getTimeMap(LatLng(1.0, 1.0))
-                resultList.results.forEach {
-                    Log.d("MAP", "ONE OF THE RESULTS: " + it.search_id)
-                    it.shapes.forEach{
-                        val pois = getPOIs(it.shell)
-                        Log.d("POI", pois.toString())
-                    }
-                }
-                // update UI here
-                runOnUiThread {
-                    Log.d("MAP", "runOnUiThread - yeah!")
-                }
+            val locations = getLocationsAsync().await()
+            val pois = getPOIsAsync().await()
+        }
+    }
 
-                val authToken = getAuthToken()
-                Log.d("MAP", "authToken: " + authToken)
-                val locations = getLocationData(authToken)
-                Log.d("MAP", "locations : " + locations)
+    private fun getLocationsAsync(): Deferred<String> {
+        return GlobalScope.async {
+            val authToken = getAuthToken()
+            getLocationData(authToken)
+        }
+    }
+
+    private fun getPOIsAsync(): Deferred<Array<PointOfInterest>> {
+        return GlobalScope.async {
+            val poiList = ArrayList<PointOfInterest>()
+            var resultList = getTimeMap(LatLng(47.376888, 8.541694))
+            resultList.results.forEach {
+                it.shapes.forEach{
+                    poiList.addAll(getPOIs(it.shell))
+                }
             }
+            poiList.toArray() as Array<PointOfInterest>
         }
     }
 
