@@ -15,7 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntermediateActivity"></activity>
+        <activity android:name=".BuyPage"></activity>
+        <activity
+            android:name=".SurpriseActivity"
+            android:label="@string/title_activity_surprise"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.eventsurprise.MainActivity" />
+        </activity>
+        <activity android:name=".IntermediateActivity" />
         <activity android:name=".EndActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

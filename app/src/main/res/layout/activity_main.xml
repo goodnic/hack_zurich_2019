@@ -7,34 +7,36 @@
     android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="136dp"
-        android:layout_height="89dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="108dp"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="changeToIntermediate"
-        android:text="Go"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorPrimary"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:typeface="monospace"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageButton
+        android:id="@+id/btnSurpriseMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cropToPadding="false"
+        android:tint="#37D31212"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/gift_card" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="407dp"
         android:layout_height="331dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginBottom="4dp"
+        android:padding="10dp"
         android:text="Surprise Me!"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sbb_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
