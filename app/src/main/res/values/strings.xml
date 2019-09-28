@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventSurprise</string>
+    <string name="app_name">Best By Surprise</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_surprise">SurpriseActivity</string>
+    <string name="title_activity_surprise">Surprise!</string>
 </resources>
