@@ -5,8 +5,8 @@ import com.github.kittinunf.fuel.core.Headers
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
-private val X_APPLICATION_ID = "af8183df"
-private val X_API_KEY = "21f500db6a3e53d627b0b5adf67e4847"
+private val X_APPLICATION_ID = ""
+private val X_API_KEY = ""
 
 private data class DepartureSearch(
     val id: String,
