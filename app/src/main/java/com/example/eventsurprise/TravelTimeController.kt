@@ -1,8 +1,11 @@
 package com.example.eventsurprise
 
+import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Headers
+import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import java.util.*
 
 private val X_APPLICATION_ID = ""
@@ -16,7 +19,30 @@ private data class DepartureSearch(
     val travelTime: Number
 )
 
-fun getTimeMap(coordinates: LatLng) {
+data class Coordinate(
+    val lat: Double,
+    val lng: Double
+)
+
+data class Shape(
+    val shell: List<Coordinate>,
+    val holes: List<Coordinate>
+)
+
+data class Result(
+    val search_id: String,
+    val shapes: List<Shape>
+)
+
+data class ResultList(
+    val results: List<Result>
+) {
+    class Deserializer : ResponseDeserializable<ResultList> {
+        override fun deserialize(content: String) = Gson().fromJson(content, ResultList::class.java)
+    }
+}
+
+fun getTimeMap(coordinates: LatLng): ResultList {
     Fuel.post("https://api.traveltimeapp.com/v4/time-map")
         .header(Headers.CONTENT_TYPE, "application/json")
         .header("X-Application-Id", X_APPLICATION_ID)
@@ -38,7 +64,7 @@ fun getTimeMap(coordinates: LatLng) {
                 "    }\n" +
                 "  ]\n" +
                 "}")
-        .response { result ->
-            print(result)
+        .responseObject(ResultList.Deserializer()) { result ->
+             return result.get()
         }
 }
