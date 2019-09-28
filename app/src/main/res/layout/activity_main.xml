@@ -7,30 +7,6 @@
     android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/btnSurpriseMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:cropToPadding="false"
-        android:tint="#37D31212"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gift_card" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="407dp"
-        android:layout_height="331dp"
-        android:layout_marginBottom="4dp"
-        android:padding="10dp"
-        android:text="Surprise Me!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-        android:textSize="80sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="76dp"
@@ -38,5 +14,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sbb_icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btnSurpriseMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:adjustViewBounds="true"
+            android:background="#00FFFFFF"
+            android:cropToPadding="false"
+            android:paddingTop="50dp"
+            android:scaleType="fitCenter"
+            android:tint="#37D31212"
+            app:srcCompat="@drawable/gift_card" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="407dp"
+            android:layout_height="331dp"
+            android:padding="50dp"
+            android:text="Surprise Me!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            android:textSize="80sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
