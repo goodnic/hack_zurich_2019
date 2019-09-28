@@ -37,10 +37,12 @@
             android:id="@+id/textView"
             android:layout_width="407dp"
             android:layout_height="331dp"
-            android:padding="50dp"
+            android:paddingStart="50dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="50dp"
             android:text="Surprise Me!"
             android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-            android:textSize="80sp" />
+            android:textSize="55sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
